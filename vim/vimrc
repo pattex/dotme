@@ -5,6 +5,9 @@
 " Useful for debugging
 "set verbose=2
 
+" Make sure to make Vim behave in a more useful way
+set nocompatible
+
 " Add some directories to search for runtime files
 set runtimepath=~/.vim,/var/lib/vim/addons,/usr/share/vim/vimfiles,$VIMRUNTIME,/usr/share/vim/vimfiles/after,/var/lib/vim/addons/after,~/.vim/after
 
@@ -26,16 +29,15 @@ if has("autocmd")
   filetype plugin on
 endif
 
-set autowrite     " Automatically save before commands like :next and :make
-"set hidden       " Hide buffers when they are abandoned
-set ignorecase    " Do case insensitive matching
-"set incsearch    " Incremental search
-"set mouse=a      " Enable mouse usage (all modes) in terminals
-"set mousehide    " Hide the mouse pointer while typing
-set nocompatible  " Make sure to make Vim behave in a more useful way
-set showcmd       " Show (partial) command in status line.
-set showmatch     " Show matching brackets.
-set smartcase     " Do smart case matching
+set autowrite   " Automatically save before commands like :next and :make
+"set hidden     " Hide buffers when they are abandoned
+set ignorecase  " Do case insensitive matching
+"set incsearch  " Incremental search
+"set mouse=a    " Enable mouse usage (all modes) in terminals
+"set mousehide  " Hide the mouse pointer while typing
+set showcmd     " Show (partial) command in status line.
+set showmatch   " Show matching brackets.
+set smartcase   " Do smart case matching
 
 set autoindent
 set confirm
