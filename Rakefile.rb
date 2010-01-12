@@ -3,7 +3,7 @@
 #                                                                             #
 # dotme - The dotfile manager                                                 #
 #                                                                             #
-# Copyright (C) 2008 Jens Wille                                               #
+# Copyright (C) 2008-2010 Jens Wille                                          #
 #                                                                             #
 # Authors:                                                                    #
 #     Jens Wille <jens.wille@uni-koeln.de>                                    #
@@ -56,9 +56,9 @@ module DotMe
 
   extend self
 
-  VERSION = '0.0.2'
+  VERSION = '0.0.3'
 
-  IGNORE = %w[Rakefile.rb README COPYING .gitignore]
+  IGNORE = %w[Rakefile.rb README COPYING .gitignore inclexcl.sample]
 
   HOME = ENV.user_home
 
@@ -205,8 +205,11 @@ module DotMe
     hash = {}
 
     dotfiles.each { |path|
-      file = path.split(File::SEPARATOR, 2).last
-      hash[File.expand_path(path)] = File.join(HOME, ".#{file}")
+      parts   = path.split(File::SEPARATOR)
+      target  = File.join(parts[0..1])
+      symlink = File.join(HOME, ".#{parts[1] || parts[0]}")
+
+      hash[File.expand_path(target)] = symlink
     }
 
     hash
@@ -283,21 +286,11 @@ module DotMe
         end
       when :tracked
         cmd = 'ls-files'
-        _return = %w[
-          foo/x
-          foo/y
-          bar/y
-          bar/z/a
-          bar/z/b
-        ].join("\n")
+        _return = %w[foo/x foo/y bar/y bar/z/a bar/z/b].join("\n")
       when :untracked
         cmd = 'ls-files'
         args << '-o' << '--directory'
-        _return = %w[
-          foo/x.mine
-          bar/y.mine
-          blah
-        ].join("\n")
+        _return = %w[foo/x.mine bar/y.mine blah].join("\n")
     end
 
     dryrun(:git, cmd, *args + [:_return => _return]) {
