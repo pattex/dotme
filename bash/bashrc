@@ -10,6 +10,9 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# Check for the running OS
+uname=`uname -s`
+
 # Don't put duplicate lines in the history. See bash(1) for more options
 export HISTCONTROL=ignoredups
 export HISTSIZE=10000
@@ -20,10 +23,14 @@ shopt -s checkwinsize
 
 # Enable color support of ls and also add handy aliases
 if [ "$TERM" != "dumb" ]; then
-  eval "`dircolors -b`"
-  alias ls='ls --color=auto'
-  #alias dir='ls --color=auto --format=vertical'
-  #alias vdir='ls --color=auto --format=long'
+  if [[ $uname == "Darwin" ]]; then
+    alias ls='ls -G'
+  else
+    eval "`dircolors -b`"
+    alias ls='ls --color=auto'
+    #alias dir='ls --color=auto --format=vertical'
+    #alias vdir='ls --color=auto --format=long'
+  fi
 fi
 
 # Some more ls aliases
