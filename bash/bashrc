@@ -11,11 +11,11 @@
 [ -z "$PS1" ] && return
 
 # Check for the running OS
-uname=`uname -s`
+USED_OS=`uname -s`
 
 # Get them with their pathes to be more independent on different platforms.
-grep_with_path=`which grep`
-fgrep_with_path=`which fgrep`
+GREP_PATH=`which grep`
+FGREP_PATH=`which fgrep`
 
 # Don't put duplicate lines in the history. See bash(1) for more options
 export HISTCONTROL=ignoredups
@@ -27,7 +27,7 @@ shopt -s checkwinsize
 
 # Enable color support of ls and also add handy aliases
 if [ "$TERM" != "dumb" ]; then
-  if [[ $uname == "Darwin" ]]; then
+  if [[ $USED_OS == "Darwin" ]]; then
     alias ls='ls -G'
   else
     eval "`dircolors -b`"
@@ -115,11 +115,11 @@ function __svn_version() {
 }
 
 function __svn_repo() {
-  svn info 2> /dev/null | $grep_with_path '^Repository Root:' | sed 's:.*/::'
+  svn info 2> /dev/null | $GREP_PATH '^Repository Root:' | sed 's:.*/::'
 }
 
 function __svn_stale() {  # client-side
-  : svn status -u 2> /dev/null | $fgrep_with_path -o -m1 '*'
+  : svn status -u 2> /dev/null | $FGREP_PATH -o -m1 '*'
 }
 
 function __git() {
@@ -139,7 +139,7 @@ function __git_name() {
 }
 
 function __git_stale() {  # server-side
-  git status | $fgrep_with_path -m1 'Your branch is ahead of' \
+  git status | $FGREP_PATH -m1 'Your branch is ahead of' \
              | sed 's/.* by \([0-9]\+\) commit.*/+\1/'
 }
 
