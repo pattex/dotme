@@ -138,11 +138,6 @@ function __git_name() {
   git name-rev --name-only HEAD 2> /dev/null
 }
 
-function __git_stale() {  # server-side
-  git status | $FGREP_PATH -m1 'Your branch is ahead of' \
-             | sed 's/.* by \([0-9]\+\) commit.*/+\1/'
-}
-
 function __scm_info() {
   local i v b;
 
@@ -151,7 +146,7 @@ function __scm_info() {
   elif __git; then
     v="$(__git_version)"
     b="$(__git_branch)"
-    i="git:${b:-<$(__git_name)>}@${v:-<init>}$(__git_stale)"
+    i="git:${b:-<$(__git_name)>}@${v:-<init>}"
   fi
 
   [ -n "$i" ] && echo -n " [$i]"
