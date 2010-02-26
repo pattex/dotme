@@ -67,7 +67,7 @@ highlight RedundantSpaces term=standout ctermbg=yellow guibg=yellow
 match RedundantSpaces /\s\+$\| \+\ze\t/
 
 " Define paste-toggle (needed when autoindent is on)
-set pastetoggle=<F11>
+set pastetoggle=<F12>
 
 " Disable auto-comments
 au FileType * set comments=""
